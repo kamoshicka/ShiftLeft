@@ -1,6 +1,7 @@
 NuGet パッケージマネージャーコンソールで xunit をインストール
-PM> Install-Package xunit 
-PM> Install-Package xunit.runner.visualstudio
+dotnet add package xunit
+dotnet add package xunit.runner.visualstudio
+dotnet add package Microsoft.NET.Test.Sdk
 xUnitの基本構造
 ```c#
 [Fact]
