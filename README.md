@@ -1,44 +1,44 @@
 ```mermaid
 flowchart LR
 
+subgraph 開発
+    D1[要件定義]
+    D2[初期コード実装]
+    D3[PR作成]
+    D4[修正]
+    D5[単体テスト作成<br/>xUnit]
+end
+
 subgraph AI
-    A1[Skillで初期コード生成]
-    A2[SkillでxUnitテスト生成]
-end
-
-subgraph 開発者
-    D1[実装]
-    D2[Pull Request]
-    D3[修正]
-    D4[テストコード作成]
-end
-
-subgraph 自動レビュー
-    C1[Codexレビュー]
-    C2[Mutation Testing]
+    A1[Codexレビュー]
 end
 
 subgraph QA
-    Q1[コード確認]
-    Q2[テスト改善要求]
-    Q3[シナリオテスト]
+    Q1[要件定義レビュー]
+    Q2[QA観点FB]
+    Q3[要件加筆依頼]
+    Q4[PR確認]
+    Q5[Mutation Testing]
+    Q6[テスト改善]
+    Q7[シナリオテスト仕様書作成]
+    Q8[シナリオテスト]
 end
 
-A1 --> D1
-D1 --> D2
-D2 --> C1
-C1 --> Q1
+D1 --> Q1
+Q1 --> Q2
+Q2 --> Q3
+Q3 --> D2
+D2 --> D3
+D3 --> A1
+A1 --> Q4
+Q4 -->|差し戻し| D4
+D4 --> D3
+Q4 -->|承認| D5
+D5 --> Q5
+Q5 --> Q6
+Q6 -->|Surviveあり| D5
+Q6 -->|全KILL| Q8
 
-Q1 -->|差し戻し| D3
-D3 --> D2
-
-Q1 -->|承認| A2
-A2 --> D4
-D4 --> C2
+D2 -.並行作業.-> Q7
+Q7 --> Q8
 ```
-
-C2 -->|Surviveあり| Q2
-Q2 --> D4
-
-C2 -->|全件KILL| Q3
-Q3 --> End[リリース判定]
