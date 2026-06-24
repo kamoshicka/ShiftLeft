@@ -1,44 +1,53 @@
 ```mermaid
-flowchart LR
+flowchart TB
 
-subgraph 開発
-    D1[要件定義]
-    D2[初期コード実装]
-    D3[PR作成]
-    D4[修正]
-    D5[単体テスト作成<br/>xUnit]
-end
+    subgraph 要件定義フェーズ
+        D1[開発<br>要件定義]
+        Q1[QA<br>要件レビュー]
+        Q2[QA<br>QA観点フィードバック]
+        Q3[QA<br>要件加筆依頼]
 
-subgraph AI
-    A1[Codexレビュー]
-end
+        D1 --> Q1 --> Q2 --> Q3
+    end
 
-subgraph QA
-    Q1[要件定義レビュー]
-    Q2[QA観点FB]
-    Q3[要件加筆依頼]
-    Q4[PR確認]
-    Q5[Mutation Testing]
-    Q6[テスト改善]
-    Q7[シナリオテスト仕様書作成]
-    Q8[シナリオテスト]
-end
+    subgraph 実装フェーズ
+        D2[開発<br>Skillによる初期実装]
+        D3[開発<br>Pull Request]
+        A1[AI<br>Codexレビュー]
+        Q4[QA<br>確認・差し戻し]
+        D4[開発<br>修正]
 
-D1 --> Q1
-Q1 --> Q2
-Q2 --> Q3
-Q3 --> D2
-D2 --> D3
-D3 --> A1
-A1 --> Q4
-Q4 -->|差し戻し| D4
-D4 --> D3
-Q4 -->|承認| D5
-D5 --> Q5
-Q5 --> Q6
-Q6 -->|Surviveあり| D5
-Q6 -->|全KILL| Q8
+        D2 --> D3 --> A1 --> Q4
+        Q4 -->|差し戻し| D4
+        D4 --> D3
+    end
 
-D2 -.並行作業.-> Q7
-Q7 --> Q8
+    subgraph 単体テストフェーズ
+        D5[開発<br>xUnit作成]
+        Q5[QA<br>Mutation Testing]
+        Q6[QA<br>全KILLまで改善]
+
+        D5 --> Q5 --> Q6
+        Q6 -->|Surviveあり| D5
+    end
+
+    subgraph シナリオテストフェーズ
+        Q7[QA<br>シナリオテスト仕様書作成]
+        Q8[QA<br>シナリオテスト]
+    end
+
+    Q3 --> D2
+    Q4 -->|承認| D5
+    Q6 -->|全件KILL| Q8
+
+    D2 -.並行して作成.-> Q7
+    Q7 --> Q8
+
+    classDef dev fill:#dbeafe,stroke:#2563eb
+    classDef qa fill:#dcfce7,stroke:#16a34a
+    classDef ai fill:#f3e8ff,stroke:#9333ea
+
+    class D1,D2,D3,D4,D5 dev
+    class Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8 qa
+    class A1 ai
 ```
