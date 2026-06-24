@@ -1,3 +1,4 @@
+```mermaid
 flowchart LR
 
 subgraph AI
@@ -34,6 +35,7 @@ D3 --> D2
 Q1 -->|承認| A2
 A2 --> D4
 D4 --> C2
+```
 
 C2 -->|Surviveあり| Q2
 Q2 --> D4
