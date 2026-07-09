@@ -10,3 +10,10 @@ Codexのチェック項目
 - PR時にdiff全体を解析
 - バグ・抜け・テスト不足を指摘
 - セキュリティや設計の問題をコメント
+
+* Claude-reviewも併用する(トークン消費分散のため)
+```bash
+claude
+git checkout ###
+/claude-review [low,medium,high] --comment
+```
